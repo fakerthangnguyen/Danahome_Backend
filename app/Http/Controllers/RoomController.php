@@ -54,12 +54,9 @@ class RoomController extends Controller
             Storage::disk('public')->put($imageName, file_get_contents($request->image));
 
             return response()->json([
-                'message' => "Đăng tin thành công!"
+                'message' => "Đăng tin thành công!",
+                // 'category' =>$request->category_id
             ],200);
-
-
-
-
 
 
 
@@ -81,7 +78,7 @@ class RoomController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(string $id)
+    public function dit(string $id)
     {
         //
     }
@@ -89,22 +86,32 @@ class RoomController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(string $id)
+    public function show( $id)
     {
-        //
+        $rooms = Room::with(['category'])->where('id',$id)->first();
+
+        $data = Auth::guard('api')->user();
+        if($rooms){
+            return response()->json([
+                'message' => 'Thành công',
+                'data'   => $rooms,
+                'caterory' => $rooms->category->name,
+                'user' =>   $data
+            ],200);
+        } else {
+            return response()->json([
+                'message' => 'Không thành công',
+            ],400);
+        }
     }
 
-    /**
-     * Update the specified resource in storage.
-     */
+
     public function update(Request $request, string $id)
     {
         //
     }
 
-    /**
-     * Remove the specified resource from storage.
-     */
+
     public function destroy(string $id)
     {
         //

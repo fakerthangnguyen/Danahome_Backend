@@ -24,12 +24,15 @@ use Illuminate\Support\Facades\Route;
 Route::post('categories',[CategoriesController::class, 'create']);
 Route::get('categories',[CategoriesController::class, 'index']);
 
+
 //Rooms
 Route::group([ 'miđleware' =>'auth:api' ], function(){
     Route::post('rooms',[RoomController::class, 'create']);
+    Route::get('rooms/{id}',[RoomController::class, 'show']);
 });
 // Route::post('rooms',[RoomController::class, 'create']);
 Route::get('rooms',[RoomController::class, 'index']);
+
 
 //Auth
 Route::post('register',[AccountController::class, 'signup']);

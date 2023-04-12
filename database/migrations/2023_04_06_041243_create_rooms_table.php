@@ -22,7 +22,7 @@ return new class extends Migration
             $table->unsignedBigInteger('category_id');
             $table->foreign('category_id')->references('id')->on('categories');
             $table->string('image');
-            $table->bigInteger('account_id')->default(0);
+
             $table->timestamps();
         });
     }

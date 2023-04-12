@@ -24,9 +24,24 @@ class Room extends Model
         'status'
 
     ];
+    public $appends = [
+        'image_url',
+        'human_readable_created_at'
+    ];
 
     public function category(){
         return $this->belongsTo(Categories::class);
     }
 
+    public function user(){
+        return $this->belongsTo(Account::class);
+    }
+
+    public function getImageUrlAttribute(){
+        return asset('/public/storage/'.$this->image);
+    }
+
+    public function getHumanReadableCreatedAtAttribute(){
+        return $this->created_at->diffForHumans();
+    }
 }
