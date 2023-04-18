@@ -26,12 +26,17 @@ Route::get('categories',[CategoriesController::class, 'index']);
 
 
 //Rooms
-Route::group([ 'miđleware' =>'auth:api' ], function(){
+Route::group([ 'middleware' =>'auth:api' ], function(){
     Route::post('rooms',[RoomController::class, 'create']);
-    Route::get('rooms/{id}',[RoomController::class, 'show']);
+    Route::post('room2',[RoomController::class, 'create2']);
+    Route::delete('rooms/{id}/delete',[RoomController::class,'destroy']);
+    Route::put('rooms/{id}/update',[RoomController::class, 'update']);
+
 });
+Route::get('rooms/{id}',[RoomController::class, 'detail']);
 // Route::post('rooms',[RoomController::class, 'create']);
 Route::get('rooms',[RoomController::class, 'index']);
+Route::get('hotroom',[RoomController::class, 'hot']);
 
 
 //Auth

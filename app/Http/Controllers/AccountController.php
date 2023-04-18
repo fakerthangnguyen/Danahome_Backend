@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Account;
 use Illuminate\Http\Request;
-use Validator;
+use Illuminate\Support\Facades\Validator;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
@@ -95,7 +95,7 @@ class AccountController extends Controller
             'expires_at' => Carbon::parse(
                 $tokenResult->token->expires_at
             )->toDateTimeString()
-        ]);
+        ],200);
     }
 
     public function logout(Request $request)
@@ -103,7 +103,7 @@ class AccountController extends Controller
         $request->user()->token()->revoke();
         return response()->json([
             'status' => 'success',
-        ]);
+        ],200);
     }
 
 

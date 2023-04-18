@@ -33,15 +33,19 @@ class Room extends Model
         return $this->belongsTo(Categories::class);
     }
 
-    public function user(){
+    public function account(){
         return $this->belongsTo(Account::class);
     }
 
     public function getImageUrlAttribute(){
-        return asset('/public/storage/'.$this->image);
+        return asset('storage/'.$this->image);
     }
 
     public function getHumanReadableCreatedAtAttribute(){
         return $this->created_at->diffForHumans();
+    }
+
+    public function imagechild(){
+        return $this->hasMany(ImageChild::class);
     }
 }

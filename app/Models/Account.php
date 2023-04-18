@@ -26,7 +26,7 @@ class Account extends Authenticatable
         return $this->belongsTo(Role::class);
     }
 
-    public function room(){
+    public function room2(){
         return $this->hasMany(Room::class);
     }
 }
