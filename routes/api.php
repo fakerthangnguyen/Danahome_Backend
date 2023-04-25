@@ -37,6 +37,7 @@ Route::get('rooms/{id}',[RoomController::class, 'detail']);
 // Route::post('rooms',[RoomController::class, 'create']);
 Route::get('rooms',[RoomController::class, 'index']);
 Route::get('hotroom',[RoomController::class, 'hot']);
+Route::get('/list',[RoomController::class, 'list']);
 
 
 //Auth

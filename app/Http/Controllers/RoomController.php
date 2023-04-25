@@ -275,4 +275,31 @@ class RoomController extends Controller
             ],500);
         }
     }
+
+    public function list(Request $request){
+        $room = Room::with(['category','account']);
+        if($request->address){
+            $room->where('address','LIKE','%'.$request->address.'%');
+        }
+        if($request->district){
+            $room->where('district','LIKE','%'.$request->district.'%');
+        }
+        if($request->city){
+            $room->where('city','LIKE','%'.$request->city.'%');
+        }
+        if($request->ward){
+            $room->where('ward','LIKE','%'.$request->ward.'%');
+        }
+        if($request->category){
+            $room->whereHas('category',function($query) use($request){
+                $query->where('slug',$request->category);
+            });
+        }
+        $rooms = $room->get();
+        return response()->json([
+            'message' => 'Thành công',
+            'data' => $rooms
+        ],200);
+    }
+
 }
