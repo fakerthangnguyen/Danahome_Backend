@@ -94,12 +94,35 @@ class RoomController extends Controller
     public function detail( $id)
     {
         $rooms = Room::with(['category','account','imagechild'])->where('id',$id)->first();
+        // echo $rooms;
 
         $data = Auth::guard('api')->user();
         if($rooms){
             return response()->json([
                 'message' => 'Thành công',
-                'data'   => $rooms,
+                'data'   => [
+                    'ID' => $rooms->id,
+                    'province' => $rooms->district,
+                    'district' => $rooms->city,
+                    'ward' => $rooms->ward,
+                    'house__Number' =>$rooms->name,
+                    'title'  => $rooms->title,
+                    'description' => $rooms->description,
+                    'price' => $rooms->price,
+                    'acreage' => $rooms->area,
+                    'status' => $rooms->status,
+                    'user_ID' => $rooms->account->id,
+                    'categorys_Rooms_Id' => $rooms->category->id,
+                    'createAt' => $rooms->created_at,
+                    'updateAt' => $rooms->updated_at,
+                    'featured_Image' =>$rooms->image_url,
+                    'images' => $rooms->imagechild,
+                    'poster' => $rooms->account->full_name,
+                    'poster_Phone' => $rooms->account->phone_number,
+                    'poster_Image_URL' => $rooms->account->image,
+                    'roomType' => $rooms->category->name,
+                ],
+
                 // 'caterory' => $rooms->category->name,
                 // 'user' =>   $rooms->user()->name
             ],200);
@@ -113,10 +136,39 @@ class RoomController extends Controller
     public function hot(){
         $rooms = Room::with(['account','category','imagechild'])->where('hot', 1)->get();
 
+        // dd($object) ;
+        $mang = [];
+        foreach ($rooms as $key => $room){
+            $obj = (object) [
+                    'ID' =>$room->id,
+                    'province' => $room->district,
+                    'district' => $room->city,
+                    'ward' => $room->ward,
+                    'house__Number' =>$room->name,
+                    'title'  => $room->title,
+                    'description' => $room->description,
+                    'price' => $room->price,
+                    'acreage' => $room->area,
+                    'status' => $room->status,
+                    'user_ID' => $room->account->id,
+                    'categorys_Rooms_Id' => $room->category->id,
+                    'createAt' => $room->created_at,
+                    'updateAt' => $room->updated_at,
+                    'featured_Image' =>$room->image_url,
+                    'total_Image' => count($room->imagechild),
+                    'poster' => $room->account->full_name,
+                    'poster_Phone' => $room->account->phone_number,
+                    'poster_Image_URL' => $room->account->image,
+                    'roomType' => $room->category->name,
+              ];
+              array_push($mang,$obj);
+        };
+
+
         if($rooms){
             return response()->json([
                 'message' => 'Thành công',
-                'data'   => $rooms
+                'data'   => $mang,
             ],200);
         } else {
             return response()->json([
